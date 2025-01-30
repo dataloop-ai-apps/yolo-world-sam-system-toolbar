@@ -81,7 +81,7 @@
                     "runnerImage": "gcr.io/viewo-g/piper/agent/runner/apps/yolo-world-sam-toolbar:0.1.8",
                     "autoscaler": {
                         "minReplicas": 1,
-                        "maxReplicas": 7,
+                        "maxReplicas": 1,
                         "queueLength": 10
                     }
                 },
