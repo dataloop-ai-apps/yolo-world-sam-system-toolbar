@@ -1,0 +1,92 @@
+{
+    "name": "global-yoloworld-sam-toolbar",
+    "displayName": "Global YOLOWorld SAM Toolbar",
+    "description": "Global YOLOWorld SAM Toolbar",
+    "version": "0.1.2",
+    "scope": "public",
+    "codebase": {
+        "type": "git",
+        "gitUrl": "https://github.com/dataloop-ai-apps/global-yoloworld-sam-toolbar.git",
+        "gitTag": "0.1.2"
+    },
+    "attributes": {
+        "License": "Apache 2.0"
+    },
+    "components": {
+        "toolbars": [
+            {
+                "displayName": "YOLOWorld-SAM",
+                "invoke": {
+                    "type": "function",
+                    "namespace": "yoloworld-sam-toolbar.runner.run"
+                },
+                "action": "drawAnnotation",
+                "location": "imageStudio",
+                "conditions": {
+                    "resources": [
+                        {
+                            "entityType": "item",
+                            "filter": {
+                                "$and": [
+                                    {
+                                        "metadata.system.mimetype": "image/*"
+                                    },
+                                    {
+                                        "hidden": false
+                                    },
+                                    {
+                                        "type": "file"
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            }
+        ],
+        "modules": [
+            {
+                "name": "runner",
+                "entryPoint": "runner.py",
+                "className": "Runner",
+                "initInputs": [],
+                "functions": [
+                    {
+                        "name": "run",
+                        "description": "Inference both model",
+                        "input": [
+                            {
+                                "name": "item",
+                                "type": "Item"
+                            }
+                        ],
+                        "output": [
+                            {
+                                "name": "annotations",
+                                "type": "Json"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "services": [
+            {
+                "name": "yoloworld-sam-toolbar",
+                "moduleName": "runner",
+                "useUserJwt": true,
+                "runtime": {
+                    "podType": "regular-s",
+                    "concurrency": 10,
+                    "runnerImage": "gcr.io/viewo-g/piper/agent/runner/apps/yolo-world-sam-toolbar:0.1.8",
+                    "autoscaler": {
+                        "minReplicas": 1,
+                        "maxReplicas": 1,
+                        "queueLength": 10
+                    }
+                },
+                "executionTimeout": 120
+            }
+        ]
+    }
+}
