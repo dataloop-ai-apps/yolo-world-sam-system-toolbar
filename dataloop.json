@@ -2,11 +2,11 @@
     "name": "global-yoloworld-sam-toolbar",
     "displayName": "Global YOLOWorld SAM Toolbar",
     "description": "Global YOLOWorld SAM Toolbar",
-    "version": "0.1.2",
+    "version": "0.1.8",
     "scope": "public",
     "codebase": {
         "type": "git",
-        "gitUrl": "https://github.com/dataloop-ai-apps/global-yoloworld-sam-toolbar.git",
+        "gitUrl": "https://github.com/dataloop-ai-apps/yolo-world-sam-system-toolbar.git",
         "gitTag": "0.1.2"
     },
     "attributes": {
@@ -64,6 +64,16 @@
                             {
                                 "name": "annotations",
                                 "type": "Json"
+                            }
+                        ]
+                    },
+                    {
+                        "name": "run_and_upload",
+                        "description": "Run the SAM decoder on the item and upload the annotations",
+                        "input": [
+                            {
+                                "name": "item",
+                                "type": "Item"
                             }
                         ]
                     }

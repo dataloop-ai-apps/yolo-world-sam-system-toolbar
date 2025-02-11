@@ -46,6 +46,10 @@ class Runner(dl.BaseServiceRunner):
         )
         self.output_name = [a.name for a in self.sam_ort_session.get_outputs()]
 
+    def run_and_upload(self, dl, item: dl.Item):
+        annotations = self.run(dl, item)
+        item.annotations.upload(annotations)
+
     def run(self, dl, item: dl.Item):
         """
         Run the YOLO-World and SAM decoder on the item
@@ -73,7 +77,8 @@ class Runner(dl.BaseServiceRunner):
         Run the SAM decoder on the item
         """
         tic = time.time()
-        ex = self.sam_service.execute(
+        ex = dl.services.execute(
+            service_id=self.sam_service.id,
             function_name="get_sam_features",
             item_id=item.id,
             project_id=item.project.id,
